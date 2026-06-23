@@ -1,3 +1,11 @@
+## 0.4.0
+
+- Add `GdiParagraph`: wrapped multi-line text as a 1-bpp graphic. Words break on
+  spaces; a word wider than the box breaks between characters (CJK wraps). Over
+  `maxLines`, the font shrinks to `minSizePt` then clips. `minLines`/`maxLines`
+  give a fixed reserved height (empty lines kept), so a consumer's layout below
+  does not shift. Shares GDI rasterization with `GdiText` via `gdi_raster.dart`.
+
 ## 0.3.0
 
 - Add a connection-state convenience layer: `ArgoxConnection` exposes

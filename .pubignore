@@ -21,3 +21,4 @@ Thumbs.db
 # Internal planning artifacts — in git, not in the package.
 docs/
 .superpowers/
+.claude/
