@@ -60,6 +60,8 @@ The resident printer fonts are Latin-only and this unit has no Asian font board,
 so Chinese/Japanese/Korean text is printed as a bitmap: `GdiText` renders the
 string with a Windows font (GDI), and `ImmediateGraphic` sends it via the PPLB
 `GW` command. `AutoFont` picks the face by dominant script (override with `font:`).
+A line may mix CJK with ASCII — the whole line renders in the one chosen face,
+since the CJK fonts carry Latin glyphs too. Size is set in points (`sizePt`).
 
 ```dart
 await const UsbPrinter().print(CommandLabel([
