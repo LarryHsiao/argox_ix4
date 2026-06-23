@@ -34,15 +34,17 @@ const _otherPath =
 
 void main() {
   test('connected() is true when an ARGOX device is present', () async {
+    const expected = true;
     final connection =
         ArgoxConnection(devices: _FixedDevices([RawUsbDevice(_argoxPath)]));
-    expect(await connection.connected(), isTrue);
+    expect(await connection.connected(), expected);
   });
 
   test('connected() is false when no ARGOX device is present', () async {
+    const expected = false;
     final connection =
         ArgoxConnection(devices: _FixedDevices([RawUsbDevice(_otherPath)]));
-    expect(await connection.connected(), isFalse);
+    expect(await connection.connected(), expected);
   });
 
   test('status() returns the printer status when reachable', () async {
