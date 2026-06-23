@@ -11,10 +11,16 @@ void main() {
   });
 
   test('ConstBitmap exposes its dimensions and bits verbatim', () {
-    const bitmap =
-        ConstBitmap(widthPixels: 8, heightPixels: 2, bits: [0xFF, 0x00]);
-    expect(bitmap.widthPixels(), 8);
-    expect(bitmap.heightPixels(), 2);
-    expect(bitmap.bits(), [0xFF, 0x00]);
+    const expectedWidth = 8;
+    const expectedHeight = 2;
+    const expectedBits = [0xFF, 0x00];
+    const bitmap = ConstBitmap(
+      widthPixels: expectedWidth,
+      heightPixels: expectedHeight,
+      bits: expectedBits,
+    );
+    expect(bitmap.widthPixels(), expectedWidth);
+    expect(bitmap.heightPixels(), expectedHeight);
+    expect(bitmap.bits(), expectedBits);
   });
 }
