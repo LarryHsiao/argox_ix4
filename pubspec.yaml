@@ -2,7 +2,7 @@ name: argox_ix4
 description: >-
   Windows USB driver for ARGOX iX4-series PPLB label printers via the inbox
   usbprint.sys device interface — no vendor driver or print queue needed.
-version: 0.1.3
+version: 0.2.0
 repository: https://github.com/LarryHsiao/argox_ix4
 
 environment:

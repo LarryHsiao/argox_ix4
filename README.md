@@ -54,6 +54,28 @@ Future<void> main() async {
 > prefix — `import 'package:argox_ix4/argox_ix4.dart' as ix4;` — and use
 > `ix4.Text(...)`, `ix4.UsbPrinter()`, etc.
 
+## Printing CJK / non-Latin text
+
+The resident printer fonts are Latin-only and this unit has no Asian font board,
+so Chinese/Japanese/Korean text is printed as a bitmap: `GdiText` renders the
+string with a Windows font (GDI), and `ImmediateGraphic` sends it via the PPLB
+`GW` command. `AutoFont` picks the face by dominant script (override with `font:`).
+
+```dart
+await const UsbPrinter().print(CommandLabel([
+  const BufferClear(),
+  const LabelWidth(990),
+  const LabelDimensions(length: 630, gap: 35),
+  ImmediateGraphic(x: 45, y: 45, bitmap: GdiText('中文標籤', sizePt: 18)),
+  ImmediateGraphic(x: 45, y: 140, bitmap: GdiText('日本語ラベル', sizePt: 18)),
+  ImmediateGraphic(x: 45, y: 235, bitmap: GdiText('한국어 라벨', sizePt: 18)),
+  const Copies(1),
+]));
+```
+
+> Han-only text can't be distinguished as Chinese vs Japanese (Han unification);
+> it defaults to a Chinese face — pass `font: 'MS Gothic'` (etc.) to override.
+
 ## How it works
 
 `UsbPrinter` enumerates the `usbprint.sys` device-interface class, selects the
