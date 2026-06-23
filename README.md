@@ -78,6 +78,28 @@ await const UsbPrinter().print(CommandLabel([
 > Han-only text can't be distinguished as Chinese vs Japanese (Han unification);
 > it defaults to a Chinese face — pass `font: 'MS Gothic'` (etc.) to override.
 
+## Monitoring the connection
+
+The printer is **auto-selected** by USB vendor id (`0x1664`) — there is no COM
+port to configure; plug it in and print. To watch the connection state, poll
+`ArgoxConnection`, whose methods never throw:
+
+```dart
+const connection = ArgoxConnection();
+
+Timer.periodic(const Duration(seconds: 2), (_) async {
+  if (!await connection.connected()) {
+    // printer unplugged
+    return;
+  }
+  final status = await connection.status(); // PrinterStatus or DisconnectedStatus
+  // status.ok(), status.mediaOut(), status.headOpen() ...
+});
+```
+
+`connected()` reports USB presence; `status()` returns the live `PrinterStatus`
+or a `DisconnectedStatus` (not an exception) when the printer is unreachable.
+
 ## How it works
 
 `UsbPrinter` enumerates the `usbprint.sys` device-interface class, selects the

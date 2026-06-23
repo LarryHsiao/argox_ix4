@@ -1,3 +1,6 @@
+/// The USB vendor id of ARGOX printers, used to select the device.
+const argoxVendorId = 0x1664;
+
 /// A USB device exposed through the Windows `usbprint.sys` device interface.
 abstract interface class UsbDevice {
   /// The device-interface path, openable with CreateFile.
