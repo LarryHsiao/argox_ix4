@@ -1,0 +1,23 @@
+# A top-level .pubignore overrides .gitignore for `dart pub publish`, so this
+# mirrors .gitignore and then adds internal artifacts that belong in git but
+# not in the published package.
+
+# Dart
+.dart_tool/
+.packages
+build/
+pubspec.lock
+doc/api/
+
+# IDE
+*.iml
+.idea/
+.vscode/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Internal planning artifacts — in git, not in the package.
+docs/
+.superpowers/
