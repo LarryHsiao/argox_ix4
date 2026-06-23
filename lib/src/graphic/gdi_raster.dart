@@ -51,14 +51,14 @@ Pointer<LOGFONT> gdiLogFont(double sizePt, String face, {required bool bold}) {
   return lf;
 }
 
-SIZE _extent(int hdc, String s) {
+({int cx, int cy}) _extent(int hdc, String s) {
   final ptr = s.toNativeUtf16();
   final size = calloc<SIZE>();
   try {
     if (_getTextExtentPoint32(hdc, ptr, s.length, size) == FALSE) {
       throw StateError('GetTextExtentPoint32 failed (${GetLastError()}).');
     }
-    return size.ref;
+    return (cx: size.ref.cx, cy: size.ref.cy);
   } finally {
     calloc.free(size);
     calloc.free(ptr);
