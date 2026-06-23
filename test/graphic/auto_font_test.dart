@@ -38,4 +38,12 @@ void main() {
     }).name();
     expect(actual, expected);
   });
+
+  test('a partial faces map falls back to the default for a missing key', () {
+    final expected = 'Segoe UI'; // latin default, not overridden
+    final actual = const AutoFont('ASCII', faces: {
+      Script.han: 'Noto Sans CJK',
+    }).name();
+    expect(actual, expected);
+  });
 }

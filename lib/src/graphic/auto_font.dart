@@ -22,7 +22,7 @@ class AutoFont {
   };
 
   /// The chosen font face name.
-  String name() => _faces[_script()]!;
+  String name() => _faces[_script()] ?? _defaults[_script()]!;
 
   Script _script() {
     var hasKana = false;
