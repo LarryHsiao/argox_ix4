@@ -12,3 +12,8 @@ export 'package:pplb/pplb.dart';
 export 'src/usb/usb_device.dart';
 export 'src/usb/usb_devices.dart';
 export 'src/usb_printer.dart';
+
+export 'src/graphic/bitmap.dart';
+export 'src/graphic/immediate_graphic.dart';
+export 'src/graphic/auto_font.dart';
+export 'src/graphic/gdi_text.dart';
