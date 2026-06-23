@@ -93,10 +93,15 @@ class GdiText implements Bitmap {
       ..lfFaceName = face;
     final hFont = CreateFontIndirect(lf);
     var hBitmap = NULL;
+    var oldFont = NULL;
+    var oldBitmap = NULL;
     Pointer<BITMAPINFO> bmi = nullptr;
     Pointer<Pointer<NativeType>> ppvBits = nullptr;
     try {
-      final oldFont = SelectObject(hdc, hFont);
+      if (hFont == NULL) {
+        throw StateError('CreateFontIndirect failed (${GetLastError()}).');
+      }
+      oldFont = SelectObject(hdc, hFont);
       if (_getTextExtentPoint32(hdc, textPtr, text.length, size) == FALSE) {
         throw StateError('GetTextExtentPoint32 failed (${GetLastError()}).');
       }
@@ -110,7 +115,7 @@ class GdiText implements Bitmap {
       if (hBitmap == NULL) {
         throw StateError('CreateDIBSection failed (${GetLastError()}).');
       }
-      final oldBitmap = SelectObject(hdc, hBitmap);
+      oldBitmap = SelectObject(hdc, hBitmap);
 
       // DIB rows are DWORD-aligned. Pre-fill white so the background is bit 1.
       final stride = ((_widthPixels + 31) ~/ 32) * 4;
@@ -127,10 +132,9 @@ class GdiText implements Bitmap {
       _gdiFlush();
 
       _bits = _packRows(raw, _widthPixels, _heightPixels, stride);
-
-      SelectObject(hdc, oldBitmap);
-      SelectObject(hdc, oldFont);
     } finally {
+      if (oldBitmap != NULL) SelectObject(hdc, oldBitmap);
+      if (oldFont != NULL) SelectObject(hdc, oldFont);
       if (hBitmap != NULL) DeleteObject(hBitmap);
       if (hFont != NULL) DeleteObject(hFont);
       if (ppvBits != nullptr) calloc.free(ppvBits);
