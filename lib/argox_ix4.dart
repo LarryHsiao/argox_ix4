@@ -17,3 +17,6 @@ export 'src/graphic/bitmap.dart';
 export 'src/graphic/immediate_graphic.dart';
 export 'src/graphic/auto_font.dart';
 export 'src/graphic/gdi_text.dart';
+
+export 'src/status/disconnected_status.dart';
+export 'src/usb/argox_connection.dart';

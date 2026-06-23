@@ -1,3 +1,11 @@
+## 0.3.0
+
+- Add a connection-state convenience layer: `ArgoxConnection` exposes
+  `connected()` (USB presence) and a non-throwing `status()` that returns a
+  `DisconnectedStatus` when the printer is absent or unreachable — so an app can
+  poll connection state without try/catch. Expose the public `argoxVendorId`
+  constant (`0x1664`); `UsbPrinter` now reuses it.
+
 ## 0.2.0
 
 - Add bitmap text printing: `GdiText` rasterizes any string (CJK/Latin) with the

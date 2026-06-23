@@ -6,7 +6,6 @@ import 'package:win32/win32.dart';
 import 'usb/usb_device.dart';
 import 'usb/usb_devices.dart';
 
-const _argoxVendorId = 0x1664;
 const _readTimeoutMs = 2500;
 const _readBufferSize = 256;
 
@@ -22,7 +21,7 @@ class UsbPrinter implements Printer {
 
   Future<UsbDevice> _argox() async {
     final all = await _devices.value();
-    final argox = all.where((d) => d.vendorId() == _argoxVendorId);
+    final argox = all.where((d) => d.vendorId() == argoxVendorId);
     if (argox.isEmpty) {
       throw StateError('No ARGOX (vid 0x1664) USB printer found.');
     }
@@ -34,7 +33,8 @@ class UsbPrinter implements Printer {
     try {
       final handle = CreateFile(
         lpName,
-        GENERIC_ACCESS_RIGHTS.GENERIC_READ | GENERIC_ACCESS_RIGHTS.GENERIC_WRITE,
+        GENERIC_ACCESS_RIGHTS.GENERIC_READ |
+            GENERIC_ACCESS_RIGHTS.GENERIC_WRITE,
         FILE_SHARE_MODE.FILE_SHARE_READ | FILE_SHARE_MODE.FILE_SHARE_WRITE,
         nullptr,
         FILE_CREATION_DISPOSITION.OPEN_EXISTING,
