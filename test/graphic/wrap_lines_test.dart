@@ -31,4 +31,18 @@ void main() {
     final expected = ['x'];
     expect(wrapLines('x', maxWidth: 5, measure: _measure), expected);
   });
+
+  test('a fitting word followed by an over-wide word: flush then char-break',
+      () {
+    // 'ab' (20) fits maxWidth 30; 'xxxxxxxx' (80) alone exceeds it and breaks
+    // into 3-rune pieces. 'ab' is flushed first, then the pieces follow.
+    final expected = ['ab', 'xxx', 'xxx', 'xx'];
+    expect(wrapLines('ab xxxxxxxx', maxWidth: 30, measure: _measure), expected);
+  });
+
+  test('consecutive spaces are preserved when the line still fits', () {
+    // 'a  b' (two spaces) = 4 runes = 40 <= 100, so it stays one line.
+    final expected = ['a  b'];
+    expect(wrapLines('a  b', maxWidth: 100, measure: _measure), expected);
+  });
 }

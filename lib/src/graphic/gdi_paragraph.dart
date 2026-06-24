@@ -142,6 +142,9 @@ class GdiParagraph implements Bitmap {
       if (w > width) width = w;
     }
     if (width > maxWidthDots) width = maxWidthDots;
+    // Height uses the NOMINAL line height; lines are drawn at chosenLineHeight
+    // intervals. Shrinking only lowers the size, so chosenLineHeight <=
+    // nominalLineHeight and every retained line fits within the reserved slot.
     final height = reservedLines * nominalLineHeight;
 
     final bmi = gdiMonochromeBmi(width, height);
